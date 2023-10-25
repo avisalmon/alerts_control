@@ -60,9 +60,9 @@ def uquote(string):
 
 def connect():
     keys_ = {
-        'Avi1': '10203040',
-        'Avi3': '10203040',
-        'DAP-1360': '00939249'
+        'Avi1': '***',
+        'Avi3': '***',
+        'DAP-1360': '22939249'
       }
 
     station = network.WLAN(network.STA_IF)
