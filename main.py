@@ -12,8 +12,19 @@ from machine import Pin, I2C, PWM
 import ssd1306
 import _thread as th
 from font import Font
+#import keys_info
+try:
+    import keys_info
+    print('found local keys')
+    keys_ = keys_info.keys
+    google_translate_key = keys_info.google_translate_key
+except:
+    print('oops')
+    keys_ = {'SSID1': '*****',
+            'SSID2': '*****'
+            } # Your wifi keys
+    google_translate_key = 'Your_Google_Translate _API key'
 #from data import locations
-
 
 boot = Pin(0, Pin.IN)
 led = Pin(19, Pin.OUT)
@@ -59,11 +70,7 @@ def uquote(string):
     return string.replace(" ", "%20")
 
 def connect():
-    keys_ = {
-        'Avi1': '***',
-        'Avi3': '***',
-        'DAP-1360': '22939249'
-      }
+    # keys_ hold the wifi keys
 
     station = network.WLAN(network.STA_IF)
     sleep(0.2)
@@ -82,8 +89,11 @@ def connect():
             SSID = best_ap[0].decode('utf-8')
 
     if best_ap[0] != None:
+        print(1)
+        print(f'SSID {SSID} {keys_[SSID]}')
         station.connect(SSID, keys_[SSID])
         while station.isconnected() == False:
+            sleep(1)
             pass
         print(f'Connected to {SSID}')
         return SSID
@@ -185,7 +195,7 @@ class RedAlert():
         headers = {
             "content-type": "application/x-www-form-urlencoded",
             "Accept-Encoding": "application/gzip",
-            "X-RapidAPI-Key": "77bce78e72mshe71363eb59d6152p131663jsn6b523f12cb2e",
+            "X-RapidAPI-Key": google_translate_key,
             "X-RapidAPI-Host": "google-translate1.p.rapidapi.com"
         }
 
